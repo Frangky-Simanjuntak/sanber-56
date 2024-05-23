@@ -50,6 +50,8 @@ describe("example to-do app", () => {
     // This input has a data-test attribute so we'll use that to select the
     // element in accordance with best practices:
     // https://on.cypress.io/selecting-elements
+    //selain ID dan CLASS akan diapit []
+    // KALAU CLASSS diawali dot, KALAU ID diawali #
     cy.get("[data-test=new-todo]").type(`${newItem}{enter}`);
 
     // Now that we've typed our new item, let's check that it actually was added to the list.
@@ -57,7 +59,7 @@ describe("example to-do app", () => {
     // In addition, with the two default items, we should have a total of 3 elements in the list.
     // Since assertions yield the element that was asserted on,
     // we can chain both of these assertions together into a single statement.
-    cy.get(".todo-list li").should("have.length", 3).last().should("have.text", newItem);
+    cy.get(".todo-list li").should("have.length", 5).last().should("have.text", newItem);
   });
 
   it("can check off an item as completed", () => {
@@ -83,6 +85,7 @@ describe("example to-do app", () => {
       // Since we want to perform multiple tests that start with checking
       // one element, we put it in the beforeEach hook
       // so that it runs at the start of every test.
+      //cy.contains UNTUK MENGAMBIL KATA YANG MENGANDUNG
       cy.contains("Pay electric bill").parent().find("input[type=checkbox]").check();
     });
 
