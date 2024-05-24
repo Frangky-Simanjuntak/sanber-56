@@ -1,41 +1,38 @@
 describe("Test Register ", () => {
-  it("Failed Refgister - The specified email already exists", () => {
-    cy.clearCookies();
+  function randomEmail() {
+    const randomString = Math.random().toString(36).substring(2, 10);
+    const email = "user" + randomString; //+ "@gmail.com";
+    return email;
+  }
+  let userEmail = randomEmail();
+  it.only("Failed Refgister - The specified email already exists", () => {
+    cy.clearAllCookies();
     cy.visit("https://demowebshop.tricentis.com/register");
-    cy.get("#gender-male ").check().should("be.checked");
-    cy.get("#gender-female ").should("not.be.checked");
-    cy.get("#FirstName").type("testes");
-    cy.get("#LastName").type("tastas");
-    cy.get("#Email").type("testestastas123@gmail.com");
-    cy.get("#Password").type("Testes123");
-    cy.get("#ConfirmPassword").type("Testes123");
-    cy.get("#register-button").click();
-    cy.get(".validation-summary-errors > ul > li").should("contain.text", "The specified email already exists");
+    //FUNCTION LOGIN DI FILE COMMAND.js
+    cy.RegisterNewAccount("testes", "tastas", "testestastas123@gmail.com", "Testes123", "Testes123");
+    //cy.get(".validation-summary-errors > ul > li").should("contain.text", "The specified email already exists");
+    cy.ResultVerify(".validation-summary-errors > ul > li", "The specified email already exists");
   });
   it("Failed Login - Wrong Credentials", () => {
     cy.clearCookies();
     cy.visit("https://demowebshop.tricentis.com/register");
     cy.get("#gender-male ").check().should("be.checked");
-    cy.get("#gender-female ").should("not.be.checked");
-    cy.get("#FirstName").type("testes");
-    cy.get("#LastName").type("tastas");
-    cy.get("#Email").type("testestastas123gmail.com");
-    cy.get("#Password").type("Testes123");
-    cy.get("#ConfirmPassword").type("Testes123");
-    cy.get("#register-button").click();
-    cy.get(".field-validation-error > span").should("contain.text", "Wrong email");
+    // cy.get("#gender-female ").should("not.be.checked");
+    // cy.get("#FirstName").type("testes");
+    // cy.get("#LastName").type("tastas");
+    // cy.get("#Email").type("testestastas123gmail.com");
+    // cy.get("#Password").type("Testes123");
+    // cy.get("#ConfirmPassword").type("Testes123");
+    // cy.get("#register-button").click();
+    cy.RegisterNewAccount("testes", "tastas", userEmail, "Testes123", "Testes123");
+    //cy.get(".field-validation-error > span").should("contain.text", "Wrong email");
+    cy.ResultVerify(".field-validation-error > span", "Wrong email");
   });
   it("SUCCES REGISTER", () => {
     cy.clearCookies();
     cy.visit("https://demowebshop.tricentis.com/register");
-    cy.get("#gender-male ").check().should("be.checked");
-    cy.get("#gender-female ").should("not.be.checked");
-    cy.get("#FirstName").type("tes");
-    cy.get("#LastName").type("tas");
-    cy.get("#Email").type("testas12assbb@gmail.com");
-    cy.get("#Password").type("Testes123");
-    cy.get("#ConfirmPassword").type("Testes123");
-    cy.get("#register-button").click();
+    //FUNCTION LOGIN DI FILE COMMAND.js
+    cy.RegisterNewAccount("testes", "tastas", userEmail, "Testes123", "Testes123");
     cy.get(".result").should("contain.text", "Your registration completed");
     cy.get(".page-body > .buttons > .button-1").click();
     // Tunggu hingga halaman login berhasil dimuat

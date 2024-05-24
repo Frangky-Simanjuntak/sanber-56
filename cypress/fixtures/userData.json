@@ -1,0 +1,14 @@
+[   
+    {
+    "email": "testestastas123@gmail.com",
+    "password": "Testes123"
+    },
+    {
+        "username": "standard_user",
+        "password": "pass123"
+    },
+    {
+        "username": "wrong_user",
+        "password": "pass123465634"
+    }
+]
