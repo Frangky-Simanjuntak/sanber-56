@@ -1,3 +1,4 @@
+import loginPage from '../../support/pageObject/registerLoginDemoWebshop'
 describe("Test Register ", () => {
   function randomEmail() {
     const randomString = Math.random().toString(36).substring(2, 10);
@@ -5,7 +6,7 @@ describe("Test Register ", () => {
     return email;
   }
   let userEmail = randomEmail();
-  it.only("Failed Refgister - The specified email already exists", () => {
+  it("Failed Refgister - The specified email already exists", () => {
     cy.clearAllCookies();
     cy.visit("https://demowebshop.tricentis.com/register");
     //FUNCTION LOGIN DI FILE COMMAND.js
@@ -43,5 +44,23 @@ describe("Test Register ", () => {
     // Memeriksa apakah tombol "Submit" terlihat di layar sebelum melanjutkan pengujian
     cy.get("#submit-button").should("be.visible");
     cy.url().should("include", "https://demowebshop.tricentis.com/");
+
+
+  });
+  it.only("Failed Refgister - Test Page Object Model, tidka menggunakan commands AutoKetik,RegisterNewAccount", () => {
+    cy.clearAllCookies();
+    cy.visit("https://demowebshop.tricentis.com/register");
+    //FUNCTION LOGIN DI FILE COMMAND.js
+    cy.get("#gender-female ").should("not.be.checked");
+    cy.get(loginPage.fillFirstName).type("testes");
+    cy.get("#LastName").type("tastas");
+    cy.get("#Email").type("testestastas123gmail.com");
+    cy.get("#Password").type("Testes123");
+    cy.get("#ConfirmPassword").type("Testes123");
+    cy.get("#register-button").click();
+    //cy.RegisterNewAccount("testes", "tastas", "testestastas123@gmail.com", "Testes123", "Testes123");
+    //cy.get(".validation-summary-errors > ul > li").should("contain.text", "The specified email already exists");
+    cy.ResultVerify(".validation-summary-errors > ul > li", "The specified email already exists");
   });
 });
+
